@@ -1,18 +1,21 @@
 export class Exercise {
   name: string;
+  series: number;
   repetitions: number;
   restPeriod: number;
-  typeOfWeight?: string; /* kg / free body */
-  weight?: number;
+  typeOfWeight: string; /* kg / free body */
+  weight: number;
 
   constructor(
     name: string,
+    series: number,
     repetition: number,
     restPeriod: number,
     typeOfWeight?: string,
     weight?: number
   ) {
     this.name = name;
+    this.series = series;
     this.repetitions = repetition;
     this.restPeriod = restPeriod;
     this.typeOfWeight = typeOfWeight ? typeOfWeight : "";
