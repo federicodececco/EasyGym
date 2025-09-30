@@ -6,7 +6,7 @@ export default function DashBoardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative flex ">
+    <div className="relative flex">
       <div>
         <DashBoardNavBar></DashBoardNavBar>
       </div>
