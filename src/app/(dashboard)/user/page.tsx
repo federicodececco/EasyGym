@@ -1,3 +1,6 @@
+"use client";
+
+import WeightLineChart from "@/components/WeightLineChart";
 import { FatMass, LeanMass } from "@/util/Classes";
 import { Activity, TrendingUp, User } from "lucide-react";
 
@@ -185,8 +188,8 @@ export default function UserDashboard() {
               <h3 className="mb-4 text-lg font-bold text-white">
                 Andamento Massa Magra
               </h3>
-              <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-slate-600">
-                <p className="text-slate-400">Sooner or later</p>
+              <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-slate-600 pr-5">
+                <WeightLineChart leanMass={leanMassArray}></WeightLineChart>
               </div>
             </div>
           </div>
@@ -200,7 +203,7 @@ export default function UserDashboard() {
                 Andamento Massa Grassa
               </h3>
               <div className="flex h-64 items-center justify-center rounded-lg border-2 border-dashed border-slate-600">
-                <p className="text-slate-400">Sooner or later</p>
+                <WeightLineChart fatMass={fatMassArray}></WeightLineChart>
               </div>
             </div>
           </div>
