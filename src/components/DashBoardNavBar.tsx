@@ -13,11 +13,11 @@ export default function DashBoardNavBar() {
 
   return (
     <>
-      <nav className="flex h-full w-16 flex-col justify-center border-r-2 border-slate-900 bg-gradient-to-br from-slate-700 to-slate-800">
-        <div className="flex flex-col align-middle">
+      <nav className="flex border-slate-900 bg-gradient-to-br from-slate-700 to-slate-800 lg:h-full lg:w-16 lg:flex-col lg:justify-center lg:border-r-2">
+        <div className="flex w-full justify-evenly lg:flex-col lg:align-middle">
           <button
             onClick={() => handleNavigation(0, "/")}
-            className={`group py-10 duration-300 ${
+            className={`group grow py-4 duration-300 lg:py-10 ${
               activeIndex === 0
                 ? "border-l-4 border-blue-500 bg-slate-500"
                 : "hover:bg-slate-500"
@@ -28,7 +28,7 @@ export default function DashBoardNavBar() {
 
           <button
             onClick={() => handleNavigation(1, "/user")}
-            className={`group py-10 duration-300 ${
+            className={`group grow py-4 duration-300 lg:py-10 ${
               activeIndex === 1
                 ? "border-l-4 border-blue-500 bg-slate-500"
                 : "hover:bg-slate-500"
@@ -39,7 +39,7 @@ export default function DashBoardNavBar() {
 
           <button
             onClick={() => handleNavigation(2, "/managment")}
-            className={`group py-10 duration-300 group-hover:scale-[1.02] ${
+            className={`group grow py-4 duration-300 group-hover:scale-[1.02] lg:py-10 ${
               activeIndex === 2
                 ? "border-l-4 border-blue-500 bg-slate-500"
                 : "hover:bg-slate-500"
@@ -49,7 +49,7 @@ export default function DashBoardNavBar() {
           </button>
           <button
             onClick={() => setActiveIndex(3)}
-            className={`group py-10 duration-300 group-hover:scale-[1.02] ${
+            className={`group grow py-4 duration-300 group-hover:scale-[1.02] lg:py-10 ${
               activeIndex === 3
                 ? "border-l-4 border-blue-500 bg-slate-500"
                 : "hover:bg-slate-500"
