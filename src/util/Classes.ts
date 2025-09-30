@@ -3,17 +3,17 @@ export class User {
   name: string;
   surname: string;
   email: string;
-  height: string;
-  weigth: string;
+  height: number;
+  weigth: number;
   imageUrl: string;
   constructor(
     id: string,
     name: string,
     surname: string,
     email: string,
-    height: string,
-    weigth: string,
-    imageUrl: string
+    height: number,
+    weigth: number,
+    imageUrl: string,
   ) {
     this.id = id;
     this.name = name;
@@ -22,6 +22,17 @@ export class User {
     this.height = height;
     this.weigth = weigth;
     this.imageUrl = imageUrl;
+  }
+}
+
+export class Trainer {
+  id: string;
+  userId: string;
+  role: string;
+  constructor(user: User, id: string, role: string) {
+    this.id = id;
+    this.userId = user.id;
+    this.role = role;
   }
 }
 
@@ -39,7 +50,7 @@ export class Exercise {
     repetition: number,
     restPeriod: number,
     typeOfWeight?: string,
-    weight?: number
+    weight?: number,
   ) {
     this.name = name;
     this.series = series;
@@ -52,25 +63,19 @@ export class Exercise {
 
 export class WorkoutPlan {
   userId: string;
-  userName: string;
-  userSurname: string;
-  userEmail: string;
+  name: string;
   startDate: string;
   expirationDate: string;
   exericesList: Exercise[];
   constructor(
     userId: string,
-    userName: string,
-    userSurname: string,
-    userEmail: string,
+    name: string,
     startDate: string,
     expirationDate: string,
-    exerciseList: Exercise[]
+    exerciseList: Exercise[],
   ) {
     this.userId = userId;
-    this.userName = userName;
-    this.userSurname = userSurname;
-    this.userEmail = userEmail;
+    this.name = name;
     this.startDate = startDate;
     this.expirationDate = expirationDate;
     this.exericesList = exerciseList;
@@ -88,7 +93,7 @@ export class LeanMass {
     id: string,
     date: string,
     percent: number,
-    weight: number
+    weight: number,
   ) {
     this.userId = userId;
     this.id = id;
@@ -108,7 +113,7 @@ export class FatMass {
     id: string,
     date: string,
     percent: number,
-    weight: number
+    weight: number,
   ) {
     this.userId = userId;
     this.id = id;
