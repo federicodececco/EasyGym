@@ -34,10 +34,12 @@ export default function UserDashboard() {
   const latestFatMass = fatMassArray[fatMassArray.length - 1];
 
   return (
-    <section className="hide-scrollbar h-screen overflow-y-scroll bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 px-8 py-8">
+    <section className="hide-scrollbar h-screen overflow-y-scroll px-8 py-8">
+      <div className="absolute inset-0 -z-10 bg-[url('/bg-gym.jpg')] bg-cover bg-center bg-no-repeat" />
+      <div className="absolute inset-0 -z-10 bg-black/50" />
       <div className="mx-auto max-w-7xl">
         {/* Header Section */}
-        <div className="mb-8">
+        <div className="mb-8 rounded-lg bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 p-2">
           <h1 className="mb-2 text-4xl font-bold text-white">Profilo Utente</h1>
           <p className="text-slate-400">
             Visualizza e monitora i tuoi progressi

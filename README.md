@@ -8,6 +8,7 @@ Features
 
 Planned features
 -Backoffice page
+-Multi schedule
 -Timer function to help trainees
 -PWA implementation
 -server communication, to track real data
