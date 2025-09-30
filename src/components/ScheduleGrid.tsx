@@ -20,7 +20,7 @@ const fakeArrayOfData = [
 
 export default function ScheduleGrid() {
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto max-w-6xl overflow-y-scroll max-h-screen hide-scrollbar">
       <div className="md:grid  md:grid-cols-2 xl:grid-cols-3  gap-y-2 gap-x-4">
         {fakeArrayOfData.map((ex, index) => (
           <Card
