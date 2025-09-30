@@ -18,7 +18,7 @@ const fakeArrayOfData = [
   new Exercise("french press", 10, 10, 60, "kg", 25),
 ];
 
-export default function HomePage() {
+export default function ScheduleGrid() {
   return (
     <div className="mx-auto max-w-6xl">
       <div className="md:grid  md:grid-cols-2 xl:grid-cols-3  gap-y-2 gap-x-4">
