@@ -1,5 +1,5 @@
 import { Exercise } from "@/util/Classes";
-import { prisma } from "../prisma";
+import { prisma } from "@/lib/prisma";
 
 export async function getUsers() {
   return await prisma.user.findMany({

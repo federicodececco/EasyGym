@@ -6,6 +6,7 @@ export async function GET() {
     const users = await getUsers();
     return NextResponse.json(users, { status: 202 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Failed to fetch" },
       {
