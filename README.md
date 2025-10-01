@@ -1,4 +1,6 @@
-This is a yet unnamed project, I envisioned it to be a PWA that can be used
+EasyGym
+
+I envisioned this App to be a PWA that can be used
 to track users gym schedule, with a backoffice component for a coach to monitor their
 trainees progresses and sessions.
 
