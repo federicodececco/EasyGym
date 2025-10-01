@@ -5,11 +5,12 @@ to track users gym schedule, with a backoffice component for a coach to monitor 
 trainees progresses and sessions.
 
 Features
--Homepage with the schedule itself, to track exercies
+-Homepage with the schedule itself, to track exercies.
 -Page containing user infos and their gains and losses of mass.
+-Backoffice page to allow a trainer to moniotr thier trainees.
 
 Planned features
--Backoffice page
+
 -Multi schedule
 -Timer function to help trainees
 -PWA implementation
