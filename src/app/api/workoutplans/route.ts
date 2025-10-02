@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     const workoutPlan = await createWorkoutPlan(body);
     return NextResponse.json(workoutPlan, { status: 201 });
   } catch (error: any) {
+    console.error(error);
     if (error.code === "2003") {
       return NextResponse.json(
         { error: "User id is invalid or not existing" },

@@ -1,0 +1,943 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Easy Gym Documentation",
+    "version": "1.0.0",
+    "description": "API documentation for Easy Gym Backend"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Retrieves a list of all users from the database",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Gigio",
+                    "surname": "Bagigio",
+                    "email": "gigio@example.com",
+                    "height": "176",
+                    "weight": "81",
+                    "createdAt": "2024-01-01T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to fetch"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "description": "Creates a new user in the database",
+        "tags": ["Users"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserInput"
+              },
+              "example": {
+                "name": "Jane",
+                "surname": "Doe",
+                "email": "jane@example.com",
+                "height": "165",
+                "weight": "60"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 3,
+                  "name": "Jane",
+                  "surname": "Doe",
+                  "email": "jane@example.com",
+                  "height": "165",
+                  "weight": "60",
+                  "createdAt": "2024-01-03T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to create resource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "description": "Retrieves a specific user by their ID",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Gigio",
+                  "surname": "Bagigio",
+                  "email": "gigio@example.com",
+                  "height": "176",
+                  "weight": "81",
+                  "createdAt": "2024-01-01T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid user ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user",
+        "description": "Updates an existing user's information",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserInput"
+              },
+              "example": {
+                "name": "Gigio",
+                "surname": "Bagigio",
+                "email": "gigio.updated@example.com",
+                "height": "180",
+                "weight": "85"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Gigio",
+                  "surname": "Bagigio",
+                  "email": "gigio.updated@example.com",
+                  "height": "180",
+                  "weight": "85",
+                  "updatedAt": "2024-01-05T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid user ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Email already exists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to update user"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "description": "Deletes a user from the database",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Gigio",
+                  "surname": "Bagigio",
+                  "email": "gigio@example.com",
+                  "height": "176",
+                  "weight": "81"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid user ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workout-plans": {
+      "get": {
+        "summary": "Get all workout plans",
+        "description": "Retrieves a list of all workout plans from the database",
+        "tags": ["Workout Plans"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkoutPlan"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "userId": 1,
+                    "name": "Forza Upper Body",
+                    "startData": "2025-01-01",
+                    "expirationData": "2025-03-31",
+                    "createdAt": "2024-01-01T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new workout plan",
+        "description": "Creates a new workout plan in the database",
+        "tags": ["Workout Plans"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkoutPlanInput"
+              },
+              "example": {
+                "userId": 1,
+                "name": "Full Body Workout",
+                "startData": "2025-02-01",
+                "expirationData": "2025-04-30",
+                "exercises": [1, 2, 3, 4]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workout plan created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutPlan"
+                },
+                "example": {
+                  "id": 3,
+                  "userId": 1,
+                  "name": "Full Body Workout",
+                  "startData": "2025-02-01",
+                  "expirationData": "2025-04-30",
+                  "createdAt": "2024-01-03T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User id is invalid or not existing"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to create resource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/workout-plans/{id}": {
+      "get": {
+        "summary": "Get workout plan by ID",
+        "description": "Retrieves a specific workout plan by its ID",
+        "tags": ["Workout Plans"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Workout plan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutPlan"
+                },
+                "example": {
+                  "id": 1,
+                  "userId": 1,
+                  "name": "Forza Upper Body",
+                  "startData": "2025-01-01",
+                  "expirationData": "2025-03-31",
+                  "createdAt": "2024-01-01T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid workout plan ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid workoutPlan ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workout plan not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "workoutPlan not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update workout plan",
+        "description": "Updates an existing workout plan",
+        "tags": ["Workout Plans"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Workout plan ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkoutPlanInput"
+              },
+              "example": {
+                "name": "Forza Upper Body - Updated",
+                "startData": "2025-01-15",
+                "expirationData": "2025-04-15"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workout plan updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutPlan"
+                },
+                "example": {
+                  "id": 1,
+                  "userId": 1,
+                  "name": "Forza Upper Body - Updated",
+                  "startData": "2025-01-15",
+                  "expirationData": "2025-04-15",
+                  "updatedAt": "2024-01-05T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid workout plan ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid WorkoutPlan ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workout plan not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "WorkoutPlan not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to update WorkoutPlan"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete workout plan",
+        "description": "Deletes a workout plan from the database",
+        "tags": ["Workout Plans"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Workout plan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workout plan deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkoutPlan"
+                },
+                "example": {
+                  "id": 1,
+                  "userId": 1,
+                  "name": "Forza Upper Body",
+                  "startData": "2025-01-01",
+                  "expirationData": "2025-03-31"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid workout plan ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid user ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Workout plan not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "User ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's first name"
+          },
+          "surname": {
+            "type": "string",
+            "description": "User's last name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "height": {
+            "type": "string",
+            "description": "User's height in cm"
+          },
+          "weight": {
+            "type": "string",
+            "description": "User's weight in kg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when user was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when user was last updated"
+          }
+        },
+        "required": ["id", "name", "surname", "email", "height", "weight"]
+      },
+      "CreateUserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's first name"
+          },
+          "surname": {
+            "type": "string",
+            "description": "User's last name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "height": {
+            "type": "string",
+            "description": "User's height in cm"
+          },
+          "weight": {
+            "type": "string",
+            "description": "User's weight in kg"
+          }
+        },
+        "required": ["name", "surname", "email", "height", "weight"]
+      },
+      "UpdateUserInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's first name"
+          },
+          "surname": {
+            "type": "string",
+            "description": "User's last name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "height": {
+            "type": "string",
+            "description": "User's height in cm"
+          },
+          "weight": {
+            "type": "string",
+            "description": "User's weight in kg"
+          }
+        }
+      },
+      "WorkoutPlan": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Workout plan ID"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user this workout plan belongs to"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the workout plan"
+          },
+          "startData": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of the workout plan"
+          },
+          "expirationData": {
+            "type": "string",
+            "format": "date",
+            "description": "Expiration date of the workout plan"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when workout plan was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when workout plan was last updated"
+          }
+        },
+        "required": ["id", "userId", "name", "startData", "expirationData"]
+      },
+      "CreateWorkoutPlanInput": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user this workout plan belongs to"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the workout plan"
+          },
+          "startData": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of the workout plan"
+          },
+          "expirationData": {
+            "type": "string",
+            "format": "date",
+            "description": "Expiration date of the workout plan"
+          },
+          "exercises": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Array of exercise IDs to include in the workout plan"
+          }
+        },
+        "required": ["userId", "name", "startData", "expirationData"]
+      },
+      "UpdateWorkoutPlanInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the workout plan"
+          },
+          "startData": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of the workout plan"
+          },
+          "expirationData": {
+            "type": "string",
+            "format": "date",
+            "description": "Expiration date of the workout plan"
+          },
+          "exercises": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Array of exercise IDs to include in the workout plan"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "User management endpoints"
+    },
+    {
+      "name": "Workout Plans",
+      "description": "Workout plan management endpoints"
+    }
+  ]
+}

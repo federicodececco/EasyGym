@@ -2,9 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { Exercise } from "@prisma/client";
 
 interface WorkoutPlanInterface {
+  userId: number;
   name: string;
+  startData: string;
   expirationData: string;
-  exercise: Exercise[];
+  exercises?: number[];
 }
 
 export async function getWorkoutPlans() {
@@ -23,19 +25,40 @@ export async function updateWorkoutPlan(
   id: number,
   data: WorkoutPlanInterface,
 ) {
-  return await prisma.workoutPlan.update({ where: { id }, data });
+  const { exercises, ...workoutData } = data;
+
+  return await prisma.workoutPlan.update({
+    where: { id },
+    data: {
+      ...workoutData,
+      exercises: exercises
+        ? {
+            set: [],
+            connect: exercises.map((id) => ({ id })),
+          }
+        : undefined,
+    },
+    include: {
+      exercises: true,
+      user: true,
+    },
+  });
 }
 
-export async function createWorkoutPlan(data: {
-  userId: number;
-  name: string;
-  startData: string;
-  expirationData: string;
-  exercise: Exercise[];
-}) {
-  return await prisma.workoutPlan.create({ data });
-}
-
-export async function deleteWorkoutPlanById(id: number) {
-  return await prisma.workoutPlan.delete({ where: { id } });
+export async function createWorkoutPlan(data: WorkoutPlanInterface) {
+  const { exercises, ...workoutData } = data;
+  return await prisma.workoutPlan.create({
+    data: {
+      ...workoutData,
+      exercises: exercises
+        ? {
+            connect: exercises.map((id) => ({ id })),
+          }
+        : undefined,
+    },
+    include: {
+      exercises: true,
+      user: true,
+    },
+  });
 }
