@@ -4,7 +4,7 @@ import { getUsers, createUser } from "@/lib/db/users";
 export async function GET() {
   try {
     const users = await getUsers();
-    return NextResponse.json(users, { status: 202 });
+    return NextResponse.json(users, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

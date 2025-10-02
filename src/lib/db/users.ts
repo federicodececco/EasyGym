@@ -1,6 +1,4 @@
-import { Exercise } from "@/util/Classes";
 import { prisma } from "@/lib/prisma";
-import { Prisma, User } from "@prisma/client";
 
 interface UserInterface {
   name?: string;
