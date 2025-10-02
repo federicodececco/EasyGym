@@ -726,6 +726,725 @@
           }
         }
       }
+    },"/api/exercises": {
+      "get": {
+        "summary": "Get all exercises",
+        "description": "Retrieves a list of all exercises from the database",
+        "tags": ["Exercises"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Exercise"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Bench Press",
+                    "series": 4,
+                    "repetition": 10,
+                    "restPeriod": 90,
+                    "typeOfWeight": "Barbell",
+                    "weight": 80,
+                    "created_at": "2024-01-01T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new exercise",
+        "description": "Creates a new exercise in the database",
+        "tags": ["Exercises"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExerciseInput"
+              },
+              "example": {
+                "name": "Squat",
+                "series": 5,
+                "repetition": 5,
+                "restPeriod": 180,
+                "typeOfWeight": "Barbell",
+                "weight": 100
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Exercise created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                },
+                "example": {
+                  "id": 2,
+                  "name": "Squat",
+                  "series": 5,
+                  "repetition": 5,
+                  "restPeriod": 180,
+                  "typeOfWeight": "Barbell",
+                  "weight": 100,
+                  "created_at": "2024-01-02T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Exercise name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Exercise name already exists"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to create resource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/exercises/{id}": {
+      "get": {
+        "summary": "Get exercise by ID",
+        "description": "Retrieves a specific exercise by its ID",
+        "tags": ["Exercises"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Bench Press",
+                  "series": 4,
+                  "repetition": 10,
+                  "restPeriod": 90,
+                  "typeOfWeight": "Barbell",
+                  "weight": 80,
+                  "created_at": "2024-01-01T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid exercise ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid exercise ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Exercise not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update exercise",
+        "description": "Updates an existing exercise",
+        "tags": ["Exercises"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Exercise ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExerciseInput"
+              },
+              "example": {
+                "series": 5,
+                "repetition": 8,
+                "restPeriod": 120,
+                "weight": 85
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Exercise updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Bench Press",
+                  "series": 5,
+                  "repetition": 8,
+                  "restPeriod": 120,
+                  "typeOfWeight": "Barbell",
+                  "weight": 85,
+                  "created_at": "2024-01-01T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid exercise ID or name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid exercise ID or name already exists"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Exercise not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to update exercise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete exercise",
+        "description": "Deletes an exercise from the database",
+        "tags": ["Exercises"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Exercise ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exercise deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exercise"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Bench Press",
+                  "series": 4,
+                  "repetition": 10,
+                  "restPeriod": 90,
+                  "typeOfWeight": "Barbell",
+                  "weight": 80,
+                  "created_at": "2024-01-01T00:00:00.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid exercise ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid exercise ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Exercise not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Exercise not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/api/masses": {
+      "get": {
+        "summary": "Get all mass records",
+        "description": "Retrieves a list of all mass measurements from the database",
+        "tags": ["Mass"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Mass"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "date": "2025-01-15T00:00:00.000Z",
+                    "percent": 15,
+                    "weight": 75,
+                    "isLeanMass": true,
+                    "userId": 1
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new mass record",
+        "description": "Creates a new mass measurement in the database",
+        "tags": ["Mass"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMassInput"
+              },
+              "example": {
+                "percent": 18,
+                "weight": 80,
+                "isLeanMass": false,
+                "userId": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Mass record created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mass"
+                },
+                "example": {
+                  "id": 2,
+                  "date": "2025-01-20T00:00:00.000Z",
+                  "percent": 18,
+                  "weight": 80,
+                  "isLeanMass": false,
+                  "userId": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "User id is invalid or not existing"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to create resource"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/masses/{id}": {
+      "get": {
+        "summary": "Get mass record by ID",
+        "description": "Retrieves a specific mass measurement by its ID",
+        "tags": ["Mass"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Mass record ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mass"
+                },
+                "example": {
+                  "id": 1,
+                  "date": "2025-01-15T00:00:00.000Z",
+                  "percent": 15,
+                  "weight": 75,
+                  "isLeanMass": true,
+                  "userId": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid mass ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid mass ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mass record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Mass not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update mass record",
+        "description": "Updates an existing mass measurement",
+        "tags": ["Mass"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Mass record ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMassInput"
+              },
+              "example": {
+                "percent": 16,
+                "weight": 76,
+                "isLeanMass": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Mass record updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mass"
+                },
+                "example": {
+                  "id": 1,
+                  "date": "2025-01-15T00:00:00.000Z",
+                  "percent": 16,
+                  "weight": 76,
+                  "isLeanMass": true,
+                  "userId": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid mass ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid mass ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mass record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Mass not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Failed to update mass"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete mass record",
+        "description": "Deletes a mass measurement from the database",
+        "tags": ["Mass"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Mass record ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mass record deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mass"
+                },
+                "example": {
+                  "id": 1,
+                  "date": "2025-01-15T00:00:00.000Z",
+                  "percent": 15,
+                  "weight": 75,
+                  "isLeanMass": true,
+                  "userId": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid mass ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid mass ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Mass record not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Mass not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -919,6 +1638,220 @@
           }
         }
       },
+      "Mass": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Mass record ID"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of the measurement"
+          },
+          "percent": {
+            "type": "integer",
+            "description": "Percentage of body mass"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          },
+          "isLeanMass": {
+            "type": "boolean",
+            "description": "Indicates if this is lean mass or fat mass"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user this measurement belongs to"
+          }
+        },
+        "required": ["id", "date", "percent", "weight", "isLeanMass", "userId"]
+      },
+      "CreateMassInput": {
+        "type": "object",
+        "properties": {
+          "percent": {
+            "type": "integer",
+            "description": "Percentage of body mass"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          },
+          "isLeanMass": {
+            "type": "boolean",
+            "description": "Indicates if this is lean mass or fat mass"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user this measurement belongs to"
+          }
+        },
+        "required": ["percent", "weight", "isLeanMass", "userId"]
+      },
+      "UpdateMassInput": {
+        "type": "object",
+        "properties": {
+          "percent": {
+            "type": "integer",
+            "description": "Percentage of body mass"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          },
+          "isLeanMass": {
+            "type": "boolean",
+            "description": "Indicates if this is lean mass or fat mass"
+          }
+        }
+      },
+      "Trainer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Trainer ID"
+          },
+          "role": {
+            "type": "string",
+            "description": "Trainer's role or specialization"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user who is the trainer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when trainer was created"
+          }
+        },
+        "required": ["id", "role", "userId", "created_at"]
+      },
+      "CreateTrainerInput": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Trainer's role or specialization"
+          },
+          "userId": {
+            "type": "integer",
+            "description": "ID of the user who will become a trainer"
+          }
+        },
+        "required": ["role", "userId"]
+      },
+      "UpdateTrainerInput": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "description": "Trainer's role or specialization"
+          }
+        }
+      },
+      "Exercise": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Exercise ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the exercise"
+          },
+          "series": {
+            "type": "integer",
+            "description": "Number of sets"
+          },
+          "repetition": {
+            "type": "integer",
+            "description": "Number of repetitions per set"
+          },
+          "restPeriod": {
+            "type": "integer",
+            "description": "Rest period between sets in seconds"
+          },
+          "typeOfWeight": {
+            "type": "string",
+            "description": "Type of weight used (e.g., Barbell, Dumbbell, Machine)"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when exercise was created"
+          }
+        },
+        "required": ["id", "name", "series", "repetition", "restPeriod", "typeOfWeight", "weight", "created_at"]
+      },
+      "CreateExerciseInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the exercise"
+          },
+          "series": {
+            "type": "integer",
+            "description": "Number of sets"
+          },
+          "repetition": {
+            "type": "integer",
+            "description": "Number of repetitions per set"
+          },
+          "restPeriod": {
+            "type": "integer",
+            "description": "Rest period between sets in seconds"
+          },
+          "typeOfWeight": {
+            "type": "string",
+            "description": "Type of weight used (e.g., Barbell, Dumbbell, Machine)"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          }
+        },
+        "required": ["name", "series", "repetition", "restPeriod", "typeOfWeight", "weight"]
+      },
+      "UpdateExerciseInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the exercise"
+          },
+          "series": {
+            "type": "integer",
+            "description": "Number of sets"
+          },
+          "repetition": {
+            "type": "integer",
+            "description": "Number of repetitions per set"
+          },
+          "restPeriod": {
+            "type": "integer",
+            "description": "Rest period between sets in seconds"
+          },
+          "typeOfWeight": {
+            "type": "string",
+            "description": "Type of weight used (e.g., Barbell, Dumbbell, Machine)"
+          },
+          "weight": {
+            "type": "integer",
+            "description": "Weight in kg"
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
@@ -938,6 +1871,13 @@
     {
       "name": "Workout Plans",
       "description": "Workout plan management endpoints"
+    },{
+      "name": "Mass",
+      "description": "Body mass measurement endpoints"
+    },
+    {
+      "name": "Exercises",
+      "description": "Exercise management endpoints"
     }
   ]
 }
