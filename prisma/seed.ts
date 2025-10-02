@@ -159,51 +159,53 @@ async function seed() {
     },
   });
 
-  await prisma.leanMass.createMany({
+  await prisma.mass.createMany({
     data: [
       {
         userId: users[1].id,
         percent: 75,
         weight: 47,
         date: new Date("2025-01-01"),
+        isLeanMass: true,
       },
       {
         userId: users[1].id,
         percent: 77,
         weight: 48,
         date: new Date("2025-02-01"),
+        isLeanMass: true,
       },
       {
         userId: users[2].id,
         percent: 80,
         weight: 60,
         date: new Date("2025-01-15"),
+        isLeanMass: true,
       },
-    ],
-  });
-
-  await prisma.fatMass.createMany({
-    data: [
       {
         userId: users[1].id,
         percent: 25,
         weight: 16,
         date: new Date("2025-01-01"),
+        isLeanMass: false,
       },
       {
         userId: users[1].id,
         percent: 23,
         weight: 15,
         date: new Date("2025-02-01"),
+        isLeanMass: false,
       },
       {
         userId: users[2].id,
         percent: 20,
         weight: 15,
         date: new Date("2025-01-15"),
+        isLeanMass: false,
       },
     ],
   });
+
   console.log("seeding colpeted");
 }
 

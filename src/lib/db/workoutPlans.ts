@@ -62,3 +62,8 @@ export async function createWorkoutPlan(data: WorkoutPlanInterface) {
     },
   });
 }
+export async function deleteWorkoutPlanById(id: number) {
+  return prisma.workoutPlan.delete({
+    where: { id },
+  });
+}

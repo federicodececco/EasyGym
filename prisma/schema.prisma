@@ -17,9 +17,9 @@ model User {
   imageUrl     String        @default("")
   trainer      Trainer?
   workoutPlans WorkoutPlan[]
-  leanMasses   LeanMass[]
-  fatMasses    FatMass[]
-  created_at   DateTime      @default(now())
+  masses       Mass[]
+
+  created_at DateTime @default(now())
 }
 
 model Trainer {
@@ -53,20 +53,12 @@ model WorkoutPlan {
   created_at     DateTime   @default(now())
 }
 
-model LeanMass {
-  id      Int      @id @default(autoincrement())
-  date    DateTime @default(now())
-  percent Int
-  weight  Int
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId  Int
-}
-
-model FatMass {
-  id      Int      @id @default(autoincrement())
-  date    DateTime @default(now())
-  percent Int
-  weight  Int
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId  Int
+model Mass {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @default(now())
+  percent    Int
+  weight     Int
+  isLeanMass Boolean
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId     Int
 }

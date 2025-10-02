@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import {
-  getWorkoutPlanById,
-  deleteWorkoutPlanById,
-  updateWorkoutPlan,
-} from "@/lib/db/workoutPlans";
+  updateExercise,
+  getExerciseById,
+  deleteExerciseById,
+} from "@/lib/db/exercises";
 
 export async function GET(
   request: Request,
@@ -14,26 +14,29 @@ export async function GET(
     const id = parseInt(idParam);
     if (isNaN(id)) {
       return NextResponse.json(
-        { error: "Invalid workoutPlan ID" },
+        { error: "Invalid exercise ID" },
         { status: 400 },
       );
     }
-    const workoutPlan = await getWorkoutPlanById(id);
-    if (!workoutPlan) {
+    const exercise = await getExerciseById(id);
+    if (!exercise) {
       return NextResponse.json(
-        { error: "workoutPlan not found" },
-        { status: 404 },
+        { error: "Exercise not found" },
+        {
+          status: 404,
+        },
       );
     }
-    return NextResponse.json(workoutPlan);
+    return NextResponse.json(exercise);
   } catch (error) {
-    console.error("Error fetching workoutPlan:", error);
+    console.error("Error fetching exercise:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
     );
   }
 }
+
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -43,26 +46,24 @@ export async function PUT(
     const id = parseInt(idParam);
     if (isNaN(id)) {
       return NextResponse.json(
-        { error: "Invalid WorkoutPlan ID" },
+        { error: "Invalid exercise id" },
         { status: 400 },
       );
     }
-
     const dataBody = await request.json();
-
-    const res = await updateWorkoutPlan(id, dataBody);
+    const res = await updateExercise(id, dataBody);
     return NextResponse.json(res);
   } catch (error: any) {
     console.error("Error :", error);
     if (error.code === "P2025") {
       return NextResponse.json(
-        { error: "WorkoutPlan not found" },
+        { error: "Exercise not found" },
         { status: 404 },
       );
     }
 
     return NextResponse.json(
-      { error: "Failed to update WorkoutPlan" },
+      { error: "Failed to update Exercise" },
       { status: 500 },
     );
   }
@@ -76,16 +77,16 @@ export async function DELETE(
     const id = parseInt(idParam);
     if (isNaN(id)) {
       return NextResponse.json(
-        { error: "Invalid workout ID" },
+        { error: "Invalid exercise ID" },
         { status: 400 },
       );
     }
-    const res = await deleteWorkoutPlanById(id);
+    const res = await deleteExerciseById(id);
     return NextResponse.json(res);
   } catch (error: any) {
     console.error("Error :", error);
     if (error.code === "P2025") {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json({ error: "workout not found" }, { status: 404 });
     }
     return NextResponse.json(
       { error: "Internal server error" },

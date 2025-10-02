@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
-import { getExercises, createExercise } from "@/lib/db/exercises";
+import { createMass, getMasses } from "@/lib/db/masses";
 
 export async function GET() {
   try {
-    const exercises = await getExercises();
-    return NextResponse.json(exercises, { status: 200 });
+    const masses = await getMasses();
+    return NextResponse.json(masses, { status: 200 });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch" },
-      {
-        status: 500,
-      },
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const exercise = await createExercise(body);
-    return NextResponse.json(exercise, { status: 201 });
+    const mass = await createMass(body);
+    return NextResponse.json(mass, { status: 201 });
   } catch (error: any) {
     console.error(error);
     if (error.code === "2003") {

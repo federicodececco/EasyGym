@@ -82,43 +82,26 @@ export class WorkoutPlan {
   }
 }
 
-export class LeanMass {
+export class Mass {
   userId: string;
   id: string;
   date: string;
   percent: number;
   weight: number;
+  isLeanMass: boolean;
   constructor(
     userId: string,
     id: string,
     date: string,
     percent: number,
     weight: number,
+    isLeanMass: boolean,
   ) {
     this.userId = userId;
     this.id = id;
     this.date = date;
     this.percent = percent;
     this.weight = weight;
-  }
-}
-export class FatMass {
-  userId: string;
-  id: string;
-  date: string;
-  percent: number;
-  weight: number;
-  constructor(
-    userId: string,
-    id: string,
-    date: string,
-    percent: number,
-    weight: number,
-  ) {
-    this.userId = userId;
-    this.id = id;
-    this.date = date;
-    this.percent = percent;
-    this.weight = weight;
+    this.isLeanMass = isLeanMass;
   }
 }
