@@ -21,6 +21,13 @@ export async function getWorkoutPlanById(id: number) {
   });
 }
 
+export async function getWorkoutPlanByUserId(userId: number) {
+  return await prisma.workoutPlan.findMany({
+    where: { userId },
+    include: { exercises: true },
+  });
+}
+
 export async function updateWorkoutPlan(
   id: number,
   data: WorkoutPlanInterface,

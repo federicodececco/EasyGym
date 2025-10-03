@@ -3,7 +3,8 @@
 import { Exercise } from "@/util/Classes";
 import ScheduleGrid from "../../components/ScheduleGrid";
 import axiosIstance from "@/lib/axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { WorkoutPlan } from "@prisma/client";
 
 const fakeArrayOfData = [
   new Exercise("panca piana", 2, 8, 90, "kg", 80),
@@ -22,18 +23,32 @@ const fakeArrayOfData = [
   new Exercise("french press", 10, 10, 60, "kg", 25),
 ];
 export default function DashBoard() {
-  const fetchTest = async () => {
-    const test = await axiosIstance.get("/users");
-    console.log(test);
-  };
-  useEffect(() => {
-    fetchTest();
-  }, []);
-  return (
-    <section className="h-screen">
-      <div className="absolute inset-0 -z-10 bg-[url('/bg-gym.jpg')] bg-cover bg-center bg-no-repeat" />
-      <div className="absolute inset-0 -z-10 bg-black/50" />
-      <ScheduleGrid data={fakeArrayOfData}></ScheduleGrid>
-    </section>
+  const [isLoading, setIsLoading] = useState(false);
+  const [workoutData, setWorkoutData] = useState<WorkoutPlan[] | undefined>(
+    undefined,
   );
+  const fetchData = async (userId: number) => {
+    setIsLoading(true);
+    const res = await axiosIstance.get(`/workoutplans/user/${userId}`);
+    setWorkoutData(res.data);
+    console.log(res.data[0]);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData(2);
+  }, []);
+
+  if (isLoading) {
+    return <div>sto caricando</div>;
+  }
+  if (workoutData != undefined) {
+    return (
+      <section className="h-screen">
+        <div className="absolute inset-0 -z-10 bg-[url('/bg-gym.jpg')] bg-cover bg-center bg-no-repeat" />
+        <div className="absolute inset-0 -z-10 bg-black/50" />
+        <ScheduleGrid data={workoutData[0].exercises}></ScheduleGrid>
+      </section>
+    );
+  }
 }

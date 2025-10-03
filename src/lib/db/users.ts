@@ -22,6 +22,7 @@ export async function getUserById(id: number) {
   return await prisma.user.findUnique({
     where: { id },
     include: {
+      masses: {},
       workoutPlans: {
         include: { exercises: true },
       },
