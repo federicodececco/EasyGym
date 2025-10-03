@@ -2,6 +2,8 @@
 
 import { Exercise } from "@/util/Classes";
 import ScheduleGrid from "../../components/ScheduleGrid";
+import axiosIstance from "@/lib/axios";
+import { useEffect } from "react";
 
 const fakeArrayOfData = [
   new Exercise("panca piana", 2, 8, 90, "kg", 80),
@@ -20,6 +22,13 @@ const fakeArrayOfData = [
   new Exercise("french press", 10, 10, 60, "kg", 25),
 ];
 export default function DashBoard() {
+  const fetchTest = async () => {
+    const test = await axiosIstance.get("/users");
+    console.log(test);
+  };
+  useEffect(() => {
+    fetchTest();
+  }, []);
   return (
     <section className="h-screen">
       <div className="absolute inset-0 -z-10 bg-[url('/bg-gym.jpg')] bg-cover bg-center bg-no-repeat" />

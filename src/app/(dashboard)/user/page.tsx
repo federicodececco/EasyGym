@@ -1,7 +1,7 @@
 "use client";
 
 import WeightLineChart from "@/components/WeightLineChart";
-import { FatMass, LeanMass } from "@/util/Classes";
+import { Mass } from "@/util/Classes";
 import { Activity, TrendingUp, User } from "lucide-react";
 
 const fakeUser = {
@@ -14,19 +14,19 @@ const fakeUser = {
   imageUrl: "",
 };
 const leanMassArray = [
-  new LeanMass("1", "lm1", "2025-01-15", 75.5, 60.4),
-  new LeanMass("1", "lm2", "2025-02-15", 76.2, 61.0),
-  new LeanMass("1", "lm3", "2025-03-15", 77.0, 61.6),
-  new LeanMass("1", "lm4", "2025-04-15", 77.8, 62.2),
-  new LeanMass("1", "lm5", "2025-05-15", 78.5, 62.8),
+  new Mass("1", "lm1", "2025-01-15", 75.5, 60.4, true),
+  new Mass("1", "lm2", "2025-02-15", 76.2, 61.0, true),
+  new Mass("1", "lm3", "2025-03-15", 77.0, 61.6, true),
+  new Mass("1", "lm4", "2025-04-15", 77.8, 62.2, true),
+  new Mass("1", "lm5", "2025-05-15", 78.5, 62.8, true),
 ];
 
 const fatMassArray = [
-  new FatMass("1", "fm1", "2025-01-15", 24.5, 19.6),
-  new FatMass("1", "fm2", "2025-02-15", 23.8, 19.0),
-  new FatMass("1", "fm3", "2025-03-15", 23.0, 18.4),
-  new FatMass("1", "fm4", "2025-04-15", 22.2, 17.8),
-  new FatMass("1", "fm5", "2025-05-15", 21.5, 17.2),
+  new Mass("1", "fm1", "2025-01-15", 24.5, 19.6, false),
+  new Mass("1", "fm2", "2025-02-15", 23.8, 19.0, false),
+  new Mass("1", "fm3", "2025-03-15", 23.0, 18.4, false),
+  new Mass("1", "fm4", "2025-04-15", 22.2, 17.8, false),
+  new Mass("1", "fm5", "2025-05-15", 21.5, 17.2, false),
 ];
 
 export default function UserDashboard() {
